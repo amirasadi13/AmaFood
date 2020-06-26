@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item
+        android:id="@+id/go_to_countries_foods"
+        android:icon="@drawable/ic_baseline_language_24"
+        android:title="Countries Foods" />
+
+    <item
+        android:id="@+id/go_to_search_by_ingredient_page"
+        android:icon="@drawable/ic_baseline_find_in_page_24"
+        android:title="Ingredient Foods" />
+
+    <item
+        android:id="@+id/go_to_random_food_page"
+        android:title="Daily Food"
+        android:icon="@drawable/ic_baseline_today_24"
+        />
+
+</menu>

@@ -9,5 +9,61 @@
         android:id="@+id/homePageFragment"
         android:name="com.example.amafood.HomePageFragment"
         android:label="fragment_home_page"
-        tools:layout="@layout/fragment_home_page" />
+        tools:layout="@layout/fragment_home_page" >
+        <action
+            android:id="@+id/action_homePageFragment_to_categoryFoodsListItems"
+            app:destination="@id/categoryFoodsListItems" />
+        <action
+            android:id="@+id/action_homePageFragment_to_countriesListFragment"
+            app:destination="@id/countriesListFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_ingredientFoodsFragment"
+            app:destination="@id/ingredientFoodsFragment" />
+        <action
+            android:id="@+id/action_homePageFragment_to_dailyFoodFragment"
+            app:destination="@id/dailyFoodFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/categoryFoodsListItems"
+        android:name="com.example.amafood.categoryfoods.CategoryFoodsListItems"
+        android:label="fragment_category_foods_list_items"
+        tools:layout="@layout/fragment_category_foods_list_items" >
+        <action
+            android:id="@+id/action_categoryFoodsListItems_to_foodsInformation"
+            app:destination="@id/foodsInformation" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodsInformation"
+        android:name="com.example.amafood.foodinfo.FoodsInformation"
+        android:label="fragment_foods_information"
+        tools:layout="@layout/fragment_foods_information" />
+    <fragment
+        android:id="@+id/countriesListFragment"
+        android:name="com.example.amafood.countriesfoods.CountriesListFragment"
+        android:label="fragment_countries_list"
+        tools:layout="@layout/fragment_countries_list" >
+        <action
+            android:id="@+id/action_countriesListFragment_to_foodsInformation"
+            app:destination="@id/foodsInformation" />
+    </fragment>
+    <fragment
+        android:id="@+id/ingredientFoodsFragment"
+        android:name="com.example.amafood.ingredients.IngredientFoodsFragment"
+        android:label="fragment_ingredient_foods"
+        tools:layout="@layout/fragment_ingredient_foods" >
+        <action
+            android:id="@+id/action_ingredientFoodsFragment_to_foodsInformation"
+            app:destination="@id/foodsInformation" />
+    </fragment>
+    <fragment
+        android:id="@+id/dailyFoodFragment"
+        android:name="com.example.amafood.dailyfood.DailyFoodFragment"
+        android:label="fragment_daily_food"
+        tools:layout="@layout/fragment_daily_food" >
+        <action
+            android:id="@+id/action_dailyFoodFragment_to_foodsInformation"
+            app:destination="@id/foodsInformation" />
+    </fragment>
+
+
 </navigation>

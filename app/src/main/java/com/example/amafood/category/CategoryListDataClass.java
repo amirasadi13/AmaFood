@@ -8,9 +8,9 @@ import java.util.List;
 public class CategoryListDataClass implements Serializable {
 
     @SerializedName("categories")
-    private List<AllItems> categoriesItems;
+    private List<CategoryListItemsDataClass> categoriesItems;
 
-    public List<AllItems> getCategoriesItems() {
+    public List<CategoryListItemsDataClass> getCategoriesItems() {
         return categoriesItems;
     }
 }
