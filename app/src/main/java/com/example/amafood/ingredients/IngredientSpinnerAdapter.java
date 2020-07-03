@@ -43,8 +43,6 @@ public class IngredientSpinnerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.ingredient_spinner_layout,null);
         TextView tvIngredientName = convertView.findViewById(R.id.tv_ingredient_name);
-        TextView tvType = convertView.findViewById(R.id.ing_type);
-        tvType.setText("Type :"+list.get(position).getIngType());
         tvIngredientName.setText(list.get(position).getIngredientName());
         return convertView;
     }

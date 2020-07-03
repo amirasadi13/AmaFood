@@ -2,7 +2,10 @@ package com.example.amafood.categoryfoods;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -14,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.amafood.R;
 import com.example.amafood.category.CategoryRetrofitClient;
+import com.example.amafood.databinding.FragmentCategoryFoodsListItemsBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -22,33 +26,47 @@ import retrofit2.Response;
 public class CategoryFoodsListItems extends Fragment {
 
     String title;
-    RecyclerView recyclerView;
-    FrameLayout progressBar;
+    FragmentCategoryFoodsListItemsBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_category_foods_list_items, container, false);
-        title = getArguments().getString("title");
-        recyclerView = view.findViewById(R.id.rv_foods_list);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        progressBar = view.findViewById(R.id.loading_foods_list);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_foods_list_items, container, false);
 
+        setBackArrow();
+        setRecycleView();
         getData();
-        return view;
+        return binding.getRoot();
+    }
+
+    private void setBackArrow() {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar4);
+        binding.toolbar4.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.toolbar4.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+                Navigation.findNavController(v).navigate(R.id.action_categoryFoodsListItems_to_categoryFragment);
+            }
+        });
+    }
+
+
+    private void setRecycleView() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvFoodsList.setLayoutManager(linearLayoutManager);
     }
 
     private void getData() {
+        title = getArguments().getString("title");
         FoodsListApiService foodsListApiService = CategoryRetrofitClient.getRetrofit().create(FoodsListApiService.class);
         Call<CategoryFoodsListDataClass> call = foodsListApiService.getCategoryFoodsList(title);
         call.enqueue(new Callback<CategoryFoodsListDataClass>() {
             @Override
             public void onResponse(Call<CategoryFoodsListDataClass> call, Response<CategoryFoodsListDataClass> response) {
                 initRecycle(response.body());
-                if (response.body() != null){
-                    progressBar.setVisibility(View.GONE);
+                if (response.body() != null) {
+                    binding.loadingFoodsList.setVisibility(View.GONE);
                 }
             }
 
@@ -61,7 +79,7 @@ public class CategoryFoodsListItems extends Fragment {
 
     private void initRecycle(CategoryFoodsListDataClass categoryFoodsListDataClass) {
         CategoryFoodsListRecycleAdapter categoryFoodsListRecycleAdapter = new CategoryFoodsListRecycleAdapter(categoryFoodsListDataClass.getMeals(), getContext());
-        recyclerView.setAdapter(categoryFoodsListRecycleAdapter);
+        binding.rvFoodsList.setAdapter(categoryFoodsListRecycleAdapter);
     }
 
 }

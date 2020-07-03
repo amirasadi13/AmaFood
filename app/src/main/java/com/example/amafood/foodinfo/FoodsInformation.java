@@ -1,36 +1,40 @@
 package com.example.amafood.foodinfo;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebSettings;
+import android.webkit.WebViewClient;
 import android.widget.MediaController;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.amafood.R;
 import com.example.amafood.category.CategoryRetrofitClient;
+import com.example.amafood.categoryfoods.CategoryFoodsItemsListDataClass;
+import com.example.amafood.categoryfoods.CategoryFoodsListDataClass;
+import com.example.amafood.categoryfoods.CategoryFoodsListRecycleAdapter;
+import com.example.amafood.categoryfoods.FoodsListApiService;
 import com.example.amafood.databinding.FragmentFoodsInformationBinding;
 
-import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.content.ContentValues.TAG;
 
 public class FoodsInformation extends Fragment {
     FragmentFoodsInformationBinding binding;
@@ -46,27 +50,99 @@ public class FoodsInformation extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_foods_information, container, false);
 
 
-
-
+        setToolbar();
         getData();
         return binding.getRoot();
     }
 
+    private void setToolbar() {
+        binding.toolbar2.setTitle(mealName);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbar2);
+        setHasOptionsMenu(true);
+        binding.toolbar2.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_foodsInformation_to_homePageFragment);
+            }
+        });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.food_info_over_flow_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btn_refresh_food_info:
+                getData();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     private void setData() {
-        MediaController mediaController = new MediaController(getContext());
-        Uri uri = Uri.parse(foodMaterial.get(0).getMealVideo());
-        mediaController.setMediaPlayer(binding.imgFoodMaterial);
-        binding.imgFoodMaterial.setMediaController(mediaController);
-        binding.imgFoodMaterial.requestFocus();
-        binding.imgFoodMaterial.setVideoURI(uri);
-        binding.imgFoodMaterial.start();
-//        Glide.with(getContext()).load(foodMaterial.get(0).getMealImg()).into(binding.imgFoodMaterial);
+        setVideo();
+        Glide.with(getContext()).load(foodMaterial.get(0).getMealImg()).into(binding.imgFoodMaterial);
         binding.tvMealName.setText(foodMaterial.get(0).getMealName());
         binding.foodInstruction.setText(foodMaterial.get(0).getMealInstruction());
         binding.tvArea.setText(foodMaterial.get(0).getMealArea());
         binding.tvCategory.setText(foodMaterial.get(0).getMealCategory());
         setIng();
         setMeas();
+        setMoreFoodsRecycle();
+        getMoreFood();
+    }
+
+    private void setMoreFoodsRecycle() {
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        binding.rvMoreFoods.setLayoutManager(linearLayoutManager);
+    }
+
+    private void getMoreFood() {
+        String category = foodMaterial.get(0).getMealCategory();
+        FoodsListApiService foodsListApiService = CategoryRetrofitClient.getRetrofit().create(FoodsListApiService.class);
+        Call<CategoryFoodsListDataClass> call = foodsListApiService.getCategoryFoodsList(category);
+        call.enqueue(new Callback<CategoryFoodsListDataClass>() {
+            @Override
+            public void onResponse(Call<CategoryFoodsListDataClass> call, Response<CategoryFoodsListDataClass> response) {
+                Toast.makeText(getContext(), "connected", Toast.LENGTH_SHORT).show();
+                initMoreFoodsRecycle(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<CategoryFoodsListDataClass> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initMoreFoodsRecycle(CategoryFoodsListDataClass categoryFoodsListDataClass) {
+        CategoryFoodsListRecycleAdapter categoryFoodsListRecycleAdapter = new CategoryFoodsListRecycleAdapter(categoryFoodsListDataClass.getMeals(),getContext());
+        binding.rvMoreFoods.setAdapter(categoryFoodsListRecycleAdapter);
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    private void setVideo() {
+        if (foodMaterial.get(0).getMealVideo() != null) {
+            binding.cardView4.setVisibility(View.VISIBLE);
+            String videoUrl = foodMaterial.get(0).getMealVideo();
+            videoUrl = videoUrl.replace("watch?v=", "embed/");
+            String newVideoUrl = "<iframe width=\"325\" height=\"315\"" +
+                    " " + " src=" + "\"" + videoUrl + "\"" + " " + "frameborder=\"0\"" + "allowfullscreen></iframe>";
+            binding.videoView.setWebViewClient(new WebViewClient());
+            WebSettings webSettings = binding.videoView.getSettings();
+            webSettings.setJavaScriptEnabled(true);
+            binding.videoView.loadData(newVideoUrl, "text/html", null);
+        }
+    }
+
+    private void showCards() {
+        binding.cardView1.setVisibility(View.VISIBLE);
+        binding.cardView2.setVisibility(View.VISIBLE);
+        binding.cardView3.setVisibility(View.VISIBLE);
     }
 
     private void getData() {
@@ -79,7 +155,9 @@ public class FoodsInformation extends Fragment {
                 foodInfo = response.body();
                 if (foodInfo != null) {
                     foodMaterial = foodInfo.getFoodMaterial();
+                    showCards();
                     setData();
+                    setVisibility();
                 }
             }
 
@@ -88,6 +166,11 @@ public class FoodsInformation extends Fragment {
 
             }
         });
+    }
+
+    private void setVisibility() {
+        binding.infoLoading.setVisibility(View.GONE);
+        binding.infoLayout.setVisibility(View.VISIBLE);
     }
 
 

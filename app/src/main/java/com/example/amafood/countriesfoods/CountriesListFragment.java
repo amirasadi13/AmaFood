@@ -2,7 +2,10 @@ package com.example.amafood.countriesfoods;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import com.example.amafood.R;
 import com.example.amafood.category.CategoryApiInterface;
 import com.example.amafood.category.CategoryRetrofitClient;
+import com.example.amafood.databinding.FragmentCountriesListBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,29 +32,42 @@ import retrofit2.Response;
 
 public class CountriesListFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
-    RecyclerView recyclerView;
-    View view;
-    Spinner spinner;
     List<CountryListItemsDataClass> countryListItems;
+    FragmentCountriesListBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_countries_list, container, false);
-        spinner = view.findViewById(R.id.spinner);
-        spinner.setOnItemSelectedListener(this);
-        countryListItems = new ArrayList<>();
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_countries_list, container, false);
+
+        setBackArrow();
+        setSpinner();
         setRecycleLayout();
         getCountriesList();
-        return view;
+        return binding.getRoot();
+    }
+
+    private void setBackArrow() {
+        ((AppCompatActivity)getActivity()).setSupportActionBar(binding.toolbar3);
+        binding.toolbar3.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+        binding.toolbar3.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.action_countriesListFragment_to_homePageFragment);
+            }
+        });
+    }
+
+    private void setSpinner() {
+        binding.spinner.setOnItemSelectedListener(this);
+        countryListItems = new ArrayList<>();
     }
 
 
     private void setRecycleLayout() {
-        recyclerView = view.findViewById(R.id.rv_countries);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        binding.rvCountries.setLayoutManager(gridLayoutManager);
     }
 
     private void getCountriesList() {
@@ -62,7 +79,7 @@ public class CountriesListFragment extends Fragment implements AdapterView.OnIte
             public void onResponse(Call<CountryListDataClass> call, Response<CountryListDataClass> response) {
                 initRecycle(response.body());
                 if (response.body() != null) {
-                    spinner.setVisibility(View.VISIBLE);
+                    binding.spinner.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -77,7 +94,7 @@ public class CountriesListFragment extends Fragment implements AdapterView.OnIte
     private void initRecycle(CountryListDataClass countryListDataClass) {
         countryListItems = countryListDataClass.getCountryList();
         CustomSpinnerAdapter customSpinnerAdapter = new CustomSpinnerAdapter(countryListItems, getContext());
-        spinner.setAdapter(customSpinnerAdapter);
+        binding.spinner.setAdapter(customSpinnerAdapter);
     }
 
     @Override
@@ -101,9 +118,10 @@ public class CountriesListFragment extends Fragment implements AdapterView.OnIte
             }
         });
     }
-    private void initCountyFoodsRecycle(CountryFoodsDataClass countryFoodsDataClass){
-        CountriesListRecycleAdapter countriesListRecycleAdapter = new CountriesListRecycleAdapter(countryFoodsDataClass.getCountryFoodsList(),getContext());
-        recyclerView.setAdapter(countriesListRecycleAdapter);
+
+    private void initCountyFoodsRecycle(CountryFoodsDataClass countryFoodsDataClass) {
+        CountriesListRecycleAdapter countriesListRecycleAdapter = new CountriesListRecycleAdapter(countryFoodsDataClass.getCountryFoodsList(), getContext());
+        binding.rvCountries.setAdapter(countriesListRecycleAdapter);
     }
 
     @Override

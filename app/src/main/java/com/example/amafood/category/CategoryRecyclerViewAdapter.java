@@ -50,7 +50,7 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
                 String title = categoryList.get(position).getTitle();
                 Bundle bundle = new Bundle();
                 bundle.putString("title",title);
-                Navigation.findNavController(v).navigate(R.id.action_homePageFragment_to_categoryFoodsListItems,bundle);
+                Navigation.findNavController(v).navigate(R.id.action_categoryFragment_to_categoryFoodsListItems,bundle);
             }
         });
 
