@@ -27,17 +27,24 @@ public class CategoryFoodsListItems extends Fragment {
 
     String title;
     FragmentCategoryFoodsListItemsBinding binding;
-
+    String date;
+    boolean chooseFood;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_category_foods_list_items, container, false);
 
+        getChooseFoodOfCalender();
         setBackArrow();
         setRecycleView();
         getData();
         return binding.getRoot();
+    }
+
+    private void getChooseFoodOfCalender() {
+        chooseFood = getArguments().getBoolean("chooseFood");
+        date = getArguments().getString("date");
     }
 
     private void setBackArrow() {
@@ -78,7 +85,8 @@ public class CategoryFoodsListItems extends Fragment {
     }
 
     private void initRecycle(CategoryFoodsListDataClass categoryFoodsListDataClass) {
-        CategoryFoodsListRecycleAdapter categoryFoodsListRecycleAdapter = new CategoryFoodsListRecycleAdapter(categoryFoodsListDataClass.getMeals(), getContext());
+        CategoryFoodsListRecycleAdapter categoryFoodsListRecycleAdapter = new CategoryFoodsListRecycleAdapter(categoryFoodsListDataClass.getMeals(), getContext()
+        ,chooseFood,date);
         binding.rvFoodsList.setAdapter(categoryFoodsListRecycleAdapter);
     }
 

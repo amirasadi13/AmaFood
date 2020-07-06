@@ -23,9 +23,14 @@ public class CategoryFoodsListRecycleAdapter extends RecyclerView.Adapter<Catego
     List<CategoryFoodsItemsListDataClass> foodsList;
     Context context;
 
-    public CategoryFoodsListRecycleAdapter(List<CategoryFoodsItemsListDataClass> foodsList, Context context) {
+    String date;
+    boolean chooseFood;
+
+    public CategoryFoodsListRecycleAdapter(List<CategoryFoodsItemsListDataClass> foodsList, Context context,boolean chooseFood,String date) {
         this.foodsList = foodsList;
         this.context = context;
+        this.chooseFood = chooseFood;
+        this.date = date;
     }
 
     @NonNull
@@ -46,6 +51,8 @@ public class CategoryFoodsListRecycleAdapter extends RecyclerView.Adapter<Catego
             public void onClick(View v) {
                 String name = foodsList.get(position).getMealName();
                 Bundle bundle = new Bundle();
+                bundle.putString("date",date);
+                bundle.putBoolean("chooseFood",chooseFood);
                 bundle.putString("mealName",name);
                 Navigation.findNavController(v).navigate(R.id.action_categoryFoodsListItems_to_foodsInformation,bundle);
             }

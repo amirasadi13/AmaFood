@@ -7,7 +7,7 @@
 
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -26,10 +26,33 @@
             app:navigationIcon="@drawable/ic_twotone_home_24"
             app:titleTextColor="@color/white" />
 
+        <Button
+            android:id="@+id/add_food"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/btn_choose_food_rounded_background"
+            android:drawableStart="@drawable/ic_baseline_post_add_24"
+            android:elevation="16dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_baseline_find_in_page_24"
+            android:text="Add to Calender"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints" />
+
         <LinearLayout
             android:id="@+id/info_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
             <ProgressBar
                 android:layout_width="match_parent"
@@ -40,10 +63,14 @@
 
         <ScrollView
             android:id="@+id/info_layout"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/color100"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/add_food"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -59,6 +86,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
@@ -762,33 +790,27 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <LinearLayout
-                    android:id="@+id/rv_more_foods_layout"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:orientation="vertical"
+                    android:layout_margin="8dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:visibility="gone"
+                    app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView1">
 
-                    <TextView
+                    <WebView
+                        android:id="@+id/video_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:drawableEnd="@drawable/ic_outline_arrow_right_24"
-                        android:text="More Foods"
-                        android:textColor="@color/colorPrimary" />
+                        tools:ignore="WebViewLayout" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_more_foods"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginVertical="8dp"
-                        android:background="@color/white"
-                        android:orientation="horizontal" />
-
-                </LinearLayout>
+                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView3"
@@ -802,7 +824,6 @@
                     android:padding="5dp"
                     android:visibility="gone"
                     app:cardCornerRadius="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView4">
@@ -841,30 +862,50 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView4"
+                    android:id="@+id/cardView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="8dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"
                     app:cardCornerRadius="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_more_foods_layout">
+                    app:layout_constraintTop_toBottomOf="@+id/cardView3">
 
-                    <WebView
-                        android:id="@+id/video_view"
+                    <LinearLayout
+                        android:id="@+id/rv_more_foods_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:ignore="WebViewLayout" />
+                        android:background="@color/white"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:drawableEnd="@drawable/ic_baseline_arrow_right_24"
+                            android:fontFamily="@font/vibur"
+                            android:padding="16dp"
+                            android:text="More Foods"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="20sp" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_more_foods"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginVertical="8dp"
+                            android:background="@color/white"
+                            android:orientation="horizontal" />
+
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
-
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

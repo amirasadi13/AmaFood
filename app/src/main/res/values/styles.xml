@@ -21,6 +21,12 @@
     <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@color/white</item>
     </style>
+
+    <style name="ActiveText">
+        <item name="iconTint">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
     <style name="DrawerItems">
         <item name="android:textColor">@color/white</item>
         <item name="android:shadowRadius">10</item>

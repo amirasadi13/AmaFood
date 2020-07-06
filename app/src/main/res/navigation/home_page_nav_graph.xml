@@ -13,18 +13,22 @@
         <action
             android:id="@+id/action_homePageFragment_to_countriesListFragment"
             app:destination="@id/countriesListFragment"
-            app:popUpTo="@id/homePageFragment" />
+            app:popUpTo="@id/home_page_nav_graph" />
         <action
             android:id="@+id/action_homePageFragment_to_ingredientFoodsFragment"
             app:destination="@id/ingredientFoodsFragment"
-            app:popUpTo="@id/homePageFragment" />
+            app:popUpTo="@id/home_page_nav_graph" />
         <action
             android:id="@+id/action_homePageFragment_to_dailyFoodFragment"
             app:destination="@id/dailyFoodFragment"
-            app:popUpTo="@id/homePageFragment" />
+            app:popUpTo="@id/home_page_nav_graph" />
         <action
             android:id="@+id/action_homePageFragment_to_categoryFragment2"
-            app:destination="@id/categoryFragment" />
+            app:destination="@id/categoryFragment"
+            app:popUpTo="@id/home_page_nav_graph" />
+        <action
+            android:id="@+id/action_homePageFragment_to_foodsInformation"
+            app:destination="@id/foodsInformation" />
     </fragment>
     <fragment
         android:id="@+id/categoryFoodsListItems"
@@ -33,7 +37,8 @@
         tools:layout="@layout/fragment_category_foods_list_items" >
         <action
             android:id="@+id/action_categoryFoodsListItems_to_foodsInformation"
-            app:destination="@id/foodsInformation" />
+            app:destination="@id/foodsInformation"
+            app:popUpTo="@id/categoryFoodsListItems" />
         <action
             android:id="@+id/action_categoryFoodsListItems_to_categoryFragment"
             app:destination="@id/categoryFragment" />
@@ -46,7 +51,18 @@
         <action
             android:id="@+id/action_foodsInformation_to_homePageFragment"
             app:destination="@id/homePageFragment" />
+        <action
+            android:id="@+id/action_foodsInformation_to_foodsInformation2"
+            app:destination="@id/foodsInformation2" />
     </fragment>
+
+    <fragment
+        android:id="@+id/foodsInformation2"
+        android:name="com.example.amafood.foodinfo.FoodsInformation"
+        android:label="fragment_foods_information"
+        tools:layout="@layout/fragment_foods_information" >
+    </fragment>
+
     <fragment
         android:id="@+id/countriesListFragment"
         android:name="com.example.amafood.countriesfoods.CountriesListFragment"
@@ -54,7 +70,8 @@
         tools:layout="@layout/fragment_countries_list" >
         <action
             android:id="@+id/action_countriesListFragment_to_foodsInformation"
-            app:destination="@id/foodsInformation" />
+            app:destination="@id/foodsInformation"
+            app:popUpTo="@id/countriesListFragment" />
         <action
             android:id="@+id/action_countriesListFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />
@@ -66,7 +83,8 @@
         tools:layout="@layout/fragment_ingredient_foods" >
         <action
             android:id="@+id/action_ingredientFoodsFragment_to_foodsInformation"
-            app:destination="@id/foodsInformation" />
+            app:destination="@id/foodsInformation"
+            app:popUpTo="@id/ingredientFoodsFragment" />
         <action
             android:id="@+id/action_ingredientFoodsFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />
@@ -78,7 +96,8 @@
         tools:layout="@layout/fragment_daily_food" >
         <action
             android:id="@+id/action_dailyFoodFragment_to_foodsInformation"
-            app:destination="@id/foodsInformation" />
+            app:destination="@id/foodsInformation"
+            app:popUpTo="@id/dailyFoodFragment" />
         <action
             android:id="@+id/action_dailyFoodFragment_to_homePageFragment"
             app:destination="@id/homePageFragment" />

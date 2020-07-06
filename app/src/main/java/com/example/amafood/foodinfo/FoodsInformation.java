@@ -23,6 +23,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.amafood.R;
+import com.example.amafood.calender.food.datebase.CalenderFoodDataBase;
+import com.example.amafood.calender.food.datebase.CalenderFoodDeo;
+import com.example.amafood.calender.food.datebase.CalenderFoods;
 import com.example.amafood.category.CategoryRetrofitClient;
 import com.example.amafood.categoryfoods.CategoryFoodsItemsListDataClass;
 import com.example.amafood.categoryfoods.CategoryFoodsListDataClass;
@@ -42,6 +45,9 @@ public class FoodsInformation extends Fragment {
     FoodInfoParentDataClass foodInfo;
     List<FoodMaterialDataClass> foodMaterial;
     MediaController mediaController;
+    Boolean goneRecycle;
+    Boolean chooseFood;
+    String currentDate;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,10 +55,30 @@ public class FoodsInformation extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_foods_information, container, false);
 
-
         setToolbar();
         getData();
         return binding.getRoot();
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void getChooseFood() {
+        chooseFood = getArguments().getBoolean("chooseFood");
+        currentDate = getArguments().getString("date");
+        if (chooseFood && currentDate != null) {
+            binding.addFood.setVisibility(View.VISIBLE);
+            binding.rvMoreFoodsLayout.setVisibility(View.GONE);
+            Toast.makeText(getContext(), currentDate, Toast.LENGTH_SHORT).show();
+            binding.addFood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CalenderFoods calenderFoods = new CalenderFoods(currentDate, foodMaterial.get(0).getMealName(), foodMaterial.get(0).getMealImg());
+                    CalenderFoodDeo calenderFoodDeo = CalenderFoodDataBase.getInstance(getContext()).calenderFoodDeo();
+                    long result = calenderFoodDeo.insertFood(calenderFoods);
+                    Toast.makeText(getContext(), "foodSaved"+result, Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigate(R.id.action_foodsInformation_to_homePageFragment);
+                }
+            });
+        }
     }
 
     private void setToolbar() {
@@ -97,7 +123,7 @@ public class FoodsInformation extends Fragment {
     }
 
     private void setMoreFoodsRecycle() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         binding.rvMoreFoods.setLayoutManager(linearLayoutManager);
     }
 
@@ -108,7 +134,10 @@ public class FoodsInformation extends Fragment {
         call.enqueue(new Callback<CategoryFoodsListDataClass>() {
             @Override
             public void onResponse(Call<CategoryFoodsListDataClass> call, Response<CategoryFoodsListDataClass> response) {
-                Toast.makeText(getContext(), "connected", Toast.LENGTH_SHORT).show();
+                goneRecycle = getArguments().getBoolean("goneRecycle");
+                if (goneRecycle) {
+                    binding.rvMoreFoodsLayout.setVisibility(View.GONE);
+                }
                 initMoreFoodsRecycle(response.body());
             }
 
@@ -120,8 +149,8 @@ public class FoodsInformation extends Fragment {
     }
 
     private void initMoreFoodsRecycle(CategoryFoodsListDataClass categoryFoodsListDataClass) {
-        CategoryFoodsListRecycleAdapter categoryFoodsListRecycleAdapter = new CategoryFoodsListRecycleAdapter(categoryFoodsListDataClass.getMeals(),getContext());
-        binding.rvMoreFoods.setAdapter(categoryFoodsListRecycleAdapter);
+        MoreFoodsRecycleAdapter moreFoodsRecycleAdapter = new MoreFoodsRecycleAdapter(categoryFoodsListDataClass.getMeals(), getContext());
+        binding.rvMoreFoods.setAdapter(moreFoodsRecycleAdapter);
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -158,6 +187,7 @@ public class FoodsInformation extends Fragment {
                     showCards();
                     setData();
                     setVisibility();
+                    getChooseFood();
                 }
             }
 

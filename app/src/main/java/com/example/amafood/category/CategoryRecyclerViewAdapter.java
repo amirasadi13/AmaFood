@@ -23,10 +23,14 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
 
     List<CategoryListItemsDataClass> categoryList;
     Context context;
+    boolean chooseFood;
+    String date;
 
-    public CategoryRecyclerViewAdapter(Context context, List<CategoryListItemsDataClass> categoryListItemDataClasses) {
+    public CategoryRecyclerViewAdapter(Context context, List<CategoryListItemsDataClass> categoryListItemDataClasses, boolean chooseFood, String date) {
         this.context = context;
         this.categoryList = categoryListItemDataClasses;
+        this.chooseFood = chooseFood;
+        this.date = date;
     }
 
     @NonNull
@@ -49,8 +53,10 @@ public class CategoryRecyclerViewAdapter extends RecyclerView.Adapter<CategoryRe
             public void onClick(View v) {
                 String title = categoryList.get(position).getTitle();
                 Bundle bundle = new Bundle();
-                bundle.putString("title",title);
-                Navigation.findNavController(v).navigate(R.id.action_categoryFragment_to_categoryFoodsListItems,bundle);
+                bundle.putBoolean("chooseFood",chooseFood);
+                bundle.putString("date",date);
+                bundle.putString("title", title);
+                Navigation.findNavController(v).navigate(R.id.action_categoryFragment_to_categoryFoodsListItems, bundle);
             }
         });
 
