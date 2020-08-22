@@ -2,7 +2,10 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/advent_pro_thin</item>
+        <item>@font/marvel</item>
         <item>@font/qwigley</item>
+        <item>@font/roboto</item>
+        <item>@font/roboto_thin</item>
         <item>@font/satisfy</item>
         <item>@font/vibur</item>
     </array>

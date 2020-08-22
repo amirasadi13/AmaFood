@@ -39,7 +39,12 @@ public class CategoryFoodsListItems extends Fragment {
         setBackArrow();
         setRecycleView();
         getData();
+        setToolbarTitle();
         return binding.getRoot();
+    }
+
+    private void setToolbarTitle() {
+        binding.toolbar4.setTitle(title);
     }
 
     private void getChooseFoodOfCalender() {

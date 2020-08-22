@@ -65,7 +65,6 @@
             android:id="@+id/info_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/color100"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/add_food"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,15 +73,15 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color100">
+                android:layout_height="wrap_content">
 
 
                 <ImageView
                     android:id="@+id/img_food_material"
                     android:layout_width="0dp"
-                    android:layout_height="250dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="400dp"
+                    android:scaleType="center"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -92,35 +91,38 @@
                     android:id="@+id/cardView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"
-                    app:cardCornerRadius="10dp"
+                    android:visibility="visible"
+                    app:cardBackgroundColor="#5000"
+                    app:layout_constraintBottom_toBottomOf="@+id/img_food_material"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/img_food_material">
+                    app:layout_constraintStart_toStartOf="parent">
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/tv_meal_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/vibur"
+                            android:fontFamily="@font/marvel"
                             android:gravity="center"
                             android:padding="15dp"
                             android:text="TextView"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="20sp" />
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp">
+                            android:layout_margin="10dp"
+                            android:paddingBottom="16dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_meal_name">
 
                             <TextView
                                 android:id="@+id/tv_category"
@@ -130,7 +132,7 @@
                                 android:fontFamily="sans-serif-condensed-medium"
                                 android:gravity="center"
                                 android:text="hello"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                             <TextView
                                 android:id="@+id/tv_area"
@@ -140,11 +142,11 @@
                                 android:fontFamily="sans-serif-condensed-medium"
                                 android:gravity="center"
                                 android:text="hello"
-                                android:textColor="@color/black" />
+                                android:textColor="@color/white" />
 
                         </LinearLayout>
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -160,27 +162,33 @@
                     app:cardCornerRadius="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardView2">
+                    app:layout_constraintTop_toBottomOf="@+id/img_food_material">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <LinearLayout
+                        <FrameLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="65dp"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/toolbar_background_preview" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="start"
-                                android:layout_weight="2"
+                                android:layout_gravity="start|center_vertical"
                                 android:fontFamily="@font/vibur"
                                 android:paddingVertical="10dp"
                                 android:paddingStart="10dp"
                                 android:text="Material"
-                                android:textColor="@color/colorAccent"
+                                android:textColor="@color/white"
                                 android:textSize="20sp" />
 
                             <ImageView
@@ -190,7 +198,7 @@
                                 android:layout_marginEnd="8dp"
                                 android:src="@drawable/ic_twotone_loyalty_24" />
 
-                        </LinearLayout>
+                        </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -206,6 +214,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
                                 android:visibility="visible">
+
+                                <ImageView
+                                    android:id="@+id/img_ing1"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing1"
@@ -237,6 +251,12 @@
                                 android:layout_margin="10dp"
                                 android:visibility="visible">
 
+                                <ImageView
+                                    android:id="@+id/img_ing2"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing2"
                                     android:layout_width="match_parent"
@@ -266,6 +286,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
                                 android:visibility="visible">
+
+                                <ImageView
+                                    android:id="@+id/img_ing3"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing3"
@@ -297,6 +323,12 @@
                                 android:layout_margin="10dp"
                                 android:visibility="visible">
 
+                                <ImageView
+                                    android:id="@+id/img_ing4"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing4"
                                     android:layout_width="match_parent"
@@ -327,6 +359,12 @@
                                 android:layout_margin="10dp"
                                 android:visibility="visible">
 
+                                <ImageView
+                                    android:id="@+id/img_ing5"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing5"
                                     android:layout_width="match_parent"
@@ -355,6 +393,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing6"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing6"
@@ -385,6 +429,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing7"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing7"
                                     android:layout_width="match_parent"
@@ -413,6 +463,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing8"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing8"
@@ -443,6 +499,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing9"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing9"
                                     android:layout_width="match_parent"
@@ -471,6 +533,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing10"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing10"
@@ -501,6 +569,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing11"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing11"
                                     android:layout_width="match_parent"
@@ -529,6 +603,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing12"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing12"
@@ -559,6 +639,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing13"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing13"
                                     android:layout_width="match_parent"
@@ -587,6 +673,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing14"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing14"
@@ -617,6 +709,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing15"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing15"
                                     android:layout_width="match_parent"
@@ -645,6 +743,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing16"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing16"
@@ -675,6 +779,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing17"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing17"
                                     android:layout_width="match_parent"
@@ -703,6 +813,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing18"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing18"
@@ -733,6 +849,12 @@
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
 
+                                <ImageView
+                                    android:id="@+id/img_ing19"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
+
                                 <TextView
                                     android:id="@+id/ing19"
                                     android:layout_width="match_parent"
@@ -761,6 +883,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp">
+
+                                <ImageView
+                                    android:id="@+id/img_ing20"
+                                    android:layout_width="75dp"
+                                    android:layout_height="75dp"
+                                    />
 
                                 <TextView
                                     android:id="@+id/ing20"
@@ -804,11 +932,42 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView1">
 
-                    <WebView
-                        android:id="@+id/video_view"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:ignore="WebViewLayout" />
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="65dp"
+                                android:layout_marginBottom="4dp"
+                                android:scaleType="centerCrop"
+                                app:srcCompat="@drawable/toolbar_background_preview"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:fontFamily="@font/vibur"
+                                android:paddingStart="10dp"
+                                android:text="Video"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
+                        </FrameLayout>
+
+                        <WebView
+                            android:id="@+id/video_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:ignore="WebViewLayout" />
+                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -833,15 +992,29 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
 
-                        <TextView
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="16dp"
-                            android:layout_marginVertical="16dp"
-                            android:fontFamily="@font/vibur"
-                            android:text="Food Instruction"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="20sp" />
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView5"
+                                android:layout_width="match_parent"
+                                android:layout_height="65dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/toolbar_background_preview"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="start|center_vertical"
+                                android:layout_marginHorizontal="16dp"
+                                android:layout_marginVertical="16dp"
+                                android:fontFamily="@font/vibur"
+                                android:text="Food Instruction"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
+                        </FrameLayout>
 
 
                         <TextView
@@ -879,16 +1052,29 @@
                         android:background="@color/white"
                         android:orientation="vertical">
 
-                        <TextView
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:drawableEnd="@drawable/ic_baseline_arrow_right_24"
-                            android:fontFamily="@font/vibur"
-                            android:padding="16dp"
-                            android:text="More Foods"
-                            android:textColor="@color/colorAccent"
-                            android:textSize="20sp" />
+                            android:layout_height="match_parent">
+
+                            <ImageView
+                                android:id="@+id/imageView6"
+                                android:layout_width="match_parent"
+                                android:layout_height="65dp"
+                                android:scaleType="centerCrop"
+                                android:src="@drawable/toolbar_background_preview"
+                                tools:srcCompat="@tools:sample/avatars" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:drawableEnd="@drawable/ic_baseline_arrow_right_24"
+                                android:fontFamily="@font/vibur"
+                                android:padding="16dp"
+                                android:text="More Foods"
+                                android:textColor="@color/white"
+                                android:textSize="20sp" />
+                        </FrameLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_more_foods"

@@ -57,6 +57,12 @@ public class HomePageFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home_page, container, false);
 
+        setCalenderOnSelected();
+        setNavigationDrawerLayout();
+        return binding.getRoot();
+    }
+
+    private void setCalenderOnSelected() {
         binding.calender.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @SuppressLint("RestrictedApi")
             @Override
@@ -67,24 +73,22 @@ public class HomePageFragment extends Fragment {
                 binding.fabAddFood.setVisibility(View.VISIBLE);
                 setCalenderFoodsRecycle(curDate);
                 setFabNavigate(curDate);
+                binding.tvTouchCalender.setVisibility(View.GONE);
             }
         });
-
-        setNavigationDrawerLayout();
-        return binding.getRoot();
     }
 
     private void setCalenderFoodsRecycle(String curDate) {
-
-
+        binding.tvNoCalenderFood.setVisibility(View.VISIBLE);
         calenderFoodDeo = CalenderFoodDataBase.getInstance(getContext()).calenderFoodDeo();
         foodsList = calenderFoodDeo.getNoteList(curDate);
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         binding.rvCalenderFoods.setLayoutManager(linearLayoutManager);
-
         CalenderFoodsRecycleAdapter calenderFoodsRecycleAdapter = new CalenderFoodsRecycleAdapter(foodsList,getContext());
         binding.rvCalenderFoods.setAdapter(calenderFoodsRecycleAdapter);
+        if (foodsList != null) {
+            binding.tvNoCalenderFood.setVisibility(View.GONE);
+        }
     }
 
     private void setFabNavigate(final String curDate) {
@@ -98,7 +102,6 @@ public class HomePageFragment extends Fragment {
             }
         });
     }
-
 
     private void setNavigationDrawerLayout() {
         ((AppCompatActivity) getActivity()).setSupportActionBar(binding.toolbar);
